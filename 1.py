@@ -38,7 +38,7 @@ eh = 55
 es = 10
 
 ev = 500
-ei = 4000
+ei = 3000
 dfcl = 0.95
 
 catchcol = 'black'
@@ -49,11 +49,11 @@ catsy1 = canvash - cath -20
 catsx2 = catsx1 + catw 
 catsy2 = catsy1 + cath
 
-cat = canvas.create_arc(catsx1,catsy1,catsx2,catsy2, start= 200 ,extent = 140, style='arc', outline=catchcol, width=3) 
+catcher = canvas.create_arc(catsx1,catsy1,catsx2,catsy2, start= 200 ,extent = 140, style='arc', outline=catchcol, width=3) 
 
-catcher = PhotoImage(file="catcher1.png")    
+catchr = PhotoImage(file="catcher1.png")    
 
-canvas.create_image(canvasw-650,canvash-120, anchor=NW, image=catcher)
+canvas.create_image(canvasw-650,canvash-120, anchor=NW, image=catchr)
 
 score = 0
 scoret = canvas.create_text(10,10,anchor='nw' , font =('Arial',12,'bold'),fill='darkblue',text='Score :' + str(score)) 
@@ -99,9 +99,34 @@ def catch():
         if catcx1 < ex1 and ex2 < catcx2 and catcy2 - ey2 < 40:
             egs.remove(e)
             canvas.delete(e)
-            
-            
-            
+            incscore(es)
 
+    root.after(200,catch)
+
+def incscore(points):
+    global score , ev , ei
+    score+= points
+    ev = int(ev * dfcl)
+    ei = int(ei * dfcl)
+    canvas.itemconfigure(scoret , text ='Score :'+ str(score))
+
+def movleft(event):
+    (x1,y1,x2,y2) = canvas.coords(catcher)
+    if x1 > 0:
+        canvas.move(catcher,-20,0)
+
+
+def moveright(event):
+    (x1,y1,x2,y2) = canvas.coords(catcher)
+    if x2 < canvasw:
+        canvas.move(catcher,20,0)
+
+canvas.bind('<Left>',movleft)
+canvas.bind('<Right>',moveright)
+canvas.focus_set()
+
+root.after(1000,crteg)
+root.after(1000,moveg)
+root.after(1000,catch)
 
 root.mainloop()
