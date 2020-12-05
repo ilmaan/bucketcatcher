@@ -100,6 +100,8 @@ def catch():
             egs.remove(e)
             canvas.delete(e)
             
+            
+            
 
 
 root.mainloop()
