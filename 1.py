@@ -62,6 +62,7 @@ liver = 3
 livet = canvas.create_text(canvasw-100,10,anchor='nw' , font =('Arial',12,'bold'),fill='darkblue',text='Lives :' + str(liver)) 
 
 
+
 egs = []
 
 def crteg():
